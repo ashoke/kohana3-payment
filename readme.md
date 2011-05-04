@@ -26,13 +26,7 @@ Basic usages you can see at test controller - classes/controller/payment/test
 
 ##Using
 
-<?php defined('SYSPATH') or die('No direct script access.');
-/**
- * Test controller for payment module.
- *
- * @author Alexey Geno <alexeygeno@gmail.com>
- * @package Payment 
- */
+
 class Controller_Payment_Test extends Controller {
 
 	/**
