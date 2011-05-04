@@ -10,6 +10,14 @@
 class Payment_Buttons_Paypal extends Payment_PayPal {
 
 	/**
+	 * Returns post url for buttons
+	 * @return string
+	 */
+	public function _post_url()
+	{
+		return $url= "https://www.{$this->_base_host}/cgi-bin/webscr";
+	}
+	/**
 	 * Gets html code for bye now button
 	 * @link https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_Appx_websitestandard_htmlvariables#id08A6HF080O3
 	 * @param array $params HTML variables array(see link for possible values)
@@ -19,7 +27,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 	{
 		$params += array('cmd'=>'_s-xclick');
 		$data = array(
-			'url' => $this->webscr_url(),
+			'url' => $this->_post_url(),
 			'params' => $params
 		);
 		return View::factory('payment/buttons/paypal/buynow',$data)->render();
@@ -35,7 +43,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 	{
 		$params += array('cmd'=>'_s-xclick');
 		$data = array(
-					'url' => $this->webscr_url(),
+					'url' => $this->_post_url(),
 					'params' => $params
 		);
 		return View::factory('payment/buttons/paypal/subscribe',$data)->render();
@@ -48,7 +56,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 	public function unsubscribe()
 	{
 		$data = array(
-					'url' => $this->webscr_url(),
+					'url' => $this->_post_url(),
 					'merchant_id' => $this->_merchant_id
 		);
 		return View::factory('payment/buttons/paypal/unsubscribe',$data)->render();
