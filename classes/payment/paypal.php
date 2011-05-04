@@ -74,7 +74,7 @@ abstract class Payment_PayPal implements Payment_Interface {
 	 */
 	public static function factory($type,$interface)
 	{
-		$class = 'Payment_'.$type.'_'.$interface.'_Paypal';
+		$class = 'Payment_'.$type.($interface?'_'.$interface:'').'_Paypal';
 
 		// Load default configuration
 		$config = Kohana::config('payment')->paypal;
