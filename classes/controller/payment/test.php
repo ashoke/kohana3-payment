@@ -24,12 +24,12 @@ class Controller_Payment_Test extends Controller {
 			}
 			elseif(Payment_Instance::notifier($gateway, 'recurring')->setup_handled($payment))
 			{
-				Kohana::$log->add(Kohana_Log::DEBUG,'Recuuring subscr setup handled :payment',array(':payment'=>$payment_recurring));
+				Kohana::$log->add(Kohana_Log::DEBUG,'Recuuring subscr setup handled :payment',array(':payment'=>$payment));
 				//here you can apply $payment to your reccuring profile creation business logic
 			}
 			elseif(Payment_Instance::notifier($gateway, 'recurring')->cancel_handled($payment))
 			{
-				Kohana::$log->add(Kohana_Log::DEBUG,'Recuuring subscr cancel handled :payment',array(':payment'=>$payment_recurring));
+				Kohana::$log->add(Kohana_Log::DEBUG,'Recuuring subscr cancel handled :payment',array(':payment'=>$payment));
 				//here you can apply $payment to your reccuring profile cancelation business logic
 			}
 			elseif(Payment_Instance::notifier($gateway, 'instant')->pay_handled($payment))
