@@ -50,7 +50,7 @@ abstract class Payment_Linkpoint implements Payment_Interface {
 	public static function factory($type,$interface)
 	{
 		$config = Kohana::config('payment')->linkpoint;
-		$class = 'Payment_'.$type.'_'.$interface.'_Linkpoint';
+		$class = 'Payment_'.$type.($interface?'_'.$interface:'').'_Linkpoint';
 		// Create a new Linkpoint instance with the default configuration
 		return new $class($config['storenumber'], $config['keyfile'], $config['environment']);
 	}
