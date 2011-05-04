@@ -18,7 +18,7 @@ php extensions required: [curl] (http://php.net/manual/en/book.curl.php)
 
 kohana official modules required: database
 
-1.aplly script for your DBMS - only db/mysql.sql exists for now
+1.applly script for your DBMS - only db/mysql.sql available for now
 
 2.configure merchant's options and enviroment at config/payment.php
 
@@ -26,8 +26,13 @@ Basic usages you can see at test controller - classes/controller/payment/test
 
 ##Using
 
-
-class Controller_Payment_Test extends Controller {
+	/**
+	 * Test controller for payment module.
+	 *
+	 * @author Alexey Geno <alexeygeno@gmail.com>
+	 * @package Payment 
+	 */
+	class Controller_Payment_Test extends Controller {
 
 	/**
 	 * Notifier action, only paypal is supported for now
