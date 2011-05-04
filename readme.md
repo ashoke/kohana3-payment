@@ -8,7 +8,7 @@ Gateway - payment system like paypal, linpoint, authorize.net etc.
 
 Mechanism types
 
-'notifier' - gateway sends data to  app(to defined controller) for notify about some actions, that has been paleced at gateway. 
+'notifier' - gateway sends data to  app(to defined controller) for notify about some actions that has been placed at gateway. 
 
 'requester' - data sends from app to gateway about some action as request and gateway return response as result of that request.
 
@@ -24,7 +24,7 @@ kohana official modules required: database
 
 Basic usages you can see at test controller - classes/controller/payment/test
 
-##Using
+##Usage
 
 	/**
 	 * Test controller for payment module.
@@ -197,7 +197,7 @@ Basic usages you can see at test controller - classes/controller/payment/test
 		echo Payment_Instance::buttons($gateway)->subscribe(array('hosted_button_id'=>'JJAF2QT55ELBU','custom'=>'account_id'));
 		echo Payment_Instance::buttons($gateway)->unsubscribe();
 	}
-}
+	}
 
 
  
