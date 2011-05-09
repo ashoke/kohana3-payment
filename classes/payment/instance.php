@@ -26,6 +26,7 @@ class Payment_Instance {
 			return self::$_instances[$instance_name];
 		}
 		$gateway_reflection_instance = new ReflectionMethod('Payment_'.$gateway,'factory');
+
 		return self::$_instances[$instance_name] = $gateway_reflection_instance->invokeArgs(NULL,array('Notifier',$interface));
 	}
 
@@ -43,6 +44,7 @@ class Payment_Instance {
 			return self::$_instances[$instance_name];
 		}
 		$gateway_reflection_instance = new ReflectionMethod('Payment_'.$gateway,'factory');
+
 		return self::$_instances[$instance_name] = $gateway_reflection_instance->invokeArgs(NULL,array('Requester',$interface));
 	}
 
@@ -59,6 +61,7 @@ class Payment_Instance {
 			return self::$_instances[$instance_name];
 		}
 		$gateway_reflection_instance = new ReflectionMethod('Payment_'.$gateway,'factory');
+
 		return self::$_instances[$instance_name] = $gateway_reflection_instance->invokeArgs(NULL,array('Buttons',''));
 	}
 }

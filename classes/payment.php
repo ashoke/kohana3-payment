@@ -236,6 +236,7 @@ abstract class Payment {
 			$empty_fields[] = $field;
 			}
 		}
+
 		return $empty_fields;
 	}
 
@@ -251,6 +252,7 @@ abstract class Payment {
 		{
 			throw new Payment_Exception('card_exp_year should be in YYYY format');
 		}
+
 		return TRUE;
 	}
 
@@ -266,6 +268,7 @@ abstract class Payment {
 		{
 			throw new Payment_Exception('card_exp_year should be in MM format');
 		}
+
 		return TRUE;
 	}
 
@@ -281,6 +284,7 @@ abstract class Payment {
 		{
 			throw new Payment_Exception('card_exp_cvv should be as 3 or 4 digit length');
 		}
+
 		return TRUE;
 	}
 
@@ -296,6 +300,7 @@ abstract class Payment {
 		{
 			throw new Payment_Exception('billing_state should be as 2 symbol length');
 		}
+
 		return TRUE;
 	}
 	
@@ -311,6 +316,7 @@ abstract class Payment {
 		{
 			throw new Payment_Exception('billing_country should be as 2 symbol length');
 		}
+
 		return TRUE;
 	}
 }

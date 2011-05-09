@@ -60,6 +60,7 @@ class Payment_Recurring extends Payment {
 	public static function  factory()
 	{
 		$class_name = get_class();
+
 		return new $class_name();
 	}
 
@@ -75,6 +76,7 @@ class Payment_Recurring extends Payment {
 			throw new Payment_Exception('frequency should be one from list: :frequencies_list',
 						array(':frequencies_list'=>"'".implode("','",$this->_frequencies)."'"));
 		}
+
 		return TRUE;
 	}
 }

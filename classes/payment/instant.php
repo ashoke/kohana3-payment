@@ -20,6 +20,7 @@ class Payment_Instant extends Payment {
 	public static function  factory()
 	{
 		$class_name = get_class();
+
 		return new $class_name();
 	}
 }

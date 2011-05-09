@@ -57,11 +57,11 @@ abstract class Payment_PayPal implements Payment_Interface {
 
 		if($this->_environment==='live')
 		{
-		$this->_base_host = 'paypal.com';
+			$this->_base_host = 'paypal.com';
 		}
 		else
 		{
-		$this->_base_host = $this->_environment.'.paypal.com';
+			$this->_base_host = $this->_environment.'.paypal.com';
 		}
 	}
 

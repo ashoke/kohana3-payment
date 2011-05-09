@@ -35,7 +35,6 @@ abstract class Payment_Linkpoint implements Payment_Interface {
 		// Set the API username and password
 		$this->_storenumber = $storenumber;
 		$this->_keyfile = $keyfile;
-				
 		// Set the environment
 		$this->_environment = $environment;
 	}
@@ -51,6 +50,7 @@ abstract class Payment_Linkpoint implements Payment_Interface {
 	{
 		$config = Kohana::config('payment')->linkpoint;
 		$class = 'Payment_'.$type.($interface?'_'.$interface:'').'_Linkpoint';
+
 		// Create a new Linkpoint instance with the default configuration
 		return new $class($config['storenumber'], $config['keyfile'], $config['environment']);
 	}
