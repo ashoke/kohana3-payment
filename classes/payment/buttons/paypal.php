@@ -30,6 +30,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 			'url' => $this->_post_url(),
 			'params' => $params
 		);
+
 		return View::factory('payment/buttons/paypal/buynow',$data)->render();
 	}
 
@@ -46,6 +47,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 					'url' => $this->_post_url(),
 					'params' => $params
 		);
+
 		return View::factory('payment/buttons/paypal/subscribe',$data)->render();
 	}
 
@@ -59,6 +61,7 @@ class Payment_Buttons_Paypal extends Payment_PayPal {
 					'url' => $this->_post_url(),
 					'merchant_id' => $this->_merchant_id
 		);
+
 		return View::factory('payment/buttons/paypal/unsubscribe',$data)->render();
 	}
 

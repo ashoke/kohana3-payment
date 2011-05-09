@@ -112,6 +112,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 				$this->_recurring_payment->frequency_num = $frequency_num;
 			}
 		}
+
 		return $handled;
 	}
 
@@ -123,7 +124,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 	{
 		//common
 		$custom = (isset($this->_post_data['custom'])?$this->_post_data['custom']:FALSE);
-		//for recurring payment
+		//for recurring payment process
 		if($this->_pay)
 		{
 			$success = (isset($this->_post_data['payment_status']) AND $this->_post_data['payment_status']==='Completed');
@@ -131,6 +132,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 			$date = (($this->_post_data['payment_date'])?strtotime($this->_post_data['payment_date']):FALSE);
 			$action = 'pay';
 		}
+		//for cancel or setup recurring profile process
 		elseif($this->_cancel OR $this->_setup)
 		{
 			//for setup and cancel
@@ -139,8 +141,10 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 			$txn_id = FALSE;
 			$action = ($this->_setup?'setup':'cancel');
 		}
+		//logging
 		$log = new Model_Payment_Log('notifier','paypal');
 		$log->create('recurring',$action,$success, $this->_post_data, array(), $txn_id, $date, $custom);
+		//if process is not sucessed then throw exception
 		if(!$success)
 		{
 			throw new Payment_Exception("Paypal ipn have not appied: payment_status is not 'Completed' but is ':status'. POST: :post ",
@@ -160,7 +164,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 		{
 			return FALSE;
 		}
-		//adapt fields
+		//adapting fields
 		if(isset($this->_post_data['payment_gross']))
 		{
 			$this->_recurring_payment->amount = $this->_post_data['payment_gross'];
@@ -179,6 +183,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 			$this->_recurring_payment->date = strtotime($this->_post_data['payment_date']);
 		}
 		$payment = $this->_recurring_payment;
+
 		return TRUE;
 	}
 
@@ -203,6 +208,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 			$this->_recurring_payment->amount = $this->_post_data['mc_amount3'];
 		}
 		$payment = $this->_recurring_payment;
+
 		return TRUE;
 	}
 
@@ -227,6 +233,7 @@ class Payment_Notifier_Recurring_Paypal extends Payment_Notifier_Paypal implemen
 		$this->_recurring_payment->amount = $this->_post_data['mc_amount3'];
 	   }
 	   $payment = $this->_recurring_payment;
+
 	   return TRUE;
 	}
 }

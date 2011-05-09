@@ -37,33 +37,32 @@ abstract class Payment_Notifier_PayPal extends Payment_PayPal {
 		//Security feature
 		if(!isset(Payment_Notifier_PayPal::$_remote_host_checked))
 		{
-		$ipn_prefix = ($this->_environment==='live')?'notify':'ipn';
-		$paypal_ipn_host = "$ipn_prefix.{$this->_base_host}";
-		$remote_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-		//if remote server is not ipn remote then show 404 and log data about that server
-		if($paypal_ipn_host!==$remote_host)
-		{
-			Kohana::$log->add(Kohana_Log::INFO, 'SECURETY: NOT PAYPAL Notifier HOST(:remote_host) TRIED TO REQUEST Notifier CONTROLLER. POST: :post',
-				array(':remote_host'=>$remote_host,':post'=>print_r($this->_post_data,TRUE)));
-			throw new Kohana_Request_Exception('Page Not found');
-		}
-
-		if($this->_post_data['receiver_email'] !== $this->_merchant_email)
-		{
-			Kohana::$log->add(Kohana_Log::INFO, "Receiver_email(:receiver_email) is not equal to merchant email(:merchant_email). POST: :post",
-				array(':receiver_email'=>$this->_post_data['receiver_email'],
-					':merchant_email'=>$this->_merchant_email,
-					':post'=>print_r($this->_post_data,TRUE)
-				)
-				);
-			throw new Kohana_Request_Exception('Page Not found');
-		}
-		Payment_Notifier_PayPal::$_remote_host_checked = TRUE;
+			$ipn_prefix = ($this->_environment==='live')?'notify':'ipn';
+			$paypal_ipn_host = "$ipn_prefix.{$this->_base_host}";
+			$remote_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			//if remote server is not ipn remote then show 404 and log data about that server
+			if($paypal_ipn_host!==$remote_host)
+			{
+				Kohana::$log->add(Kohana_Log::INFO, 'SECURETY: NOT PAYPAL Notifier HOST(:remote_host) TRIED TO REQUEST Notifier CONTROLLER. POST: :post',
+					array(':remote_host'=>$remote_host,':post'=>print_r($this->_post_data,TRUE)));
+				throw new Kohana_Request_Exception('Page Not found');
+			}
+			if($this->_post_data['receiver_email'] !== $this->_merchant_email)
+			{
+				Kohana::$log->add(Kohana_Log::INFO, "Receiver_email(:receiver_email) is not equal to merchant email(:merchant_email). POST: :post",
+					array(':receiver_email'=>$this->_post_data['receiver_email'],
+							':merchant_email'=>$this->_merchant_email,
+							':post'=>print_r($this->_post_data,TRUE)
+						)
+					);
+				throw new Kohana_Request_Exception('Page Not found');
+			}
+			Payment_Notifier_PayPal::$_remote_host_checked = TRUE;
 		}
 		if($this->handled())
 		{
-		$this->confirm();
-		$this->after_confirm();
+			$this->confirm();
+			$this->after_confirm();
 		}
 	}
 
@@ -83,7 +82,8 @@ abstract class Payment_Notifier_PayPal extends Payment_PayPal {
 	private function confirm()
 	{
 		$req = 'cmd=_notify-validate';
-		foreach ($this->_post_data as $key => $value) {
+		foreach ($this->_post_data as $key => $value)
+		{
 			$value = urlencode(stripslashes($value));
 			$req .= "&$key=$value";
 		}
@@ -103,7 +103,7 @@ abstract class Payment_Notifier_PayPal extends Payment_PayPal {
 		curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
+		//if there is no curl result then throw exception
 		if (($curl_result = curl_exec($ch)) === FALSE)
 		{
 			// Get the error code and message
@@ -113,10 +113,10 @@ abstract class Payment_Notifier_PayPal extends Payment_PayPal {
 			// Close curl
 			curl_close($ch);
 
-			throw new Kohana_Exception('PayPal IPN request for failed: :error (:code)',
+			throw new Payment_Exception('PayPal IPN request for failed: :error (:code)',
 				array(':error' => $error, ':code' => $code));
 		}
-		
+		//if data is non-confirmed then throw exception
 		if (strpos($curl_result, "VERIFIED")===FALSE)
 		{
 			throw new Payment_Exception('Paypal ipn response is not "VERIFIED" but is: ":curl_res". POST: :post',

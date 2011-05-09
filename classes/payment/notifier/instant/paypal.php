@@ -33,6 +33,7 @@ class Payment_Notifier_Instant_Paypal extends Payment_Notifier_Paypal implements
 	protected function after_confirm()
 	{
 		$custom = (isset($this->_post_data['custom'])?$this->_post_data['custom']:FALSE);
+		//for instant pay process
 		if($this->_pay)
 		{
 			$success = (isset($this->_post_data['payment_status']) AND $this->_post_data['payment_status']==='Completed');
@@ -40,14 +41,16 @@ class Payment_Notifier_Instant_Paypal extends Payment_Notifier_Paypal implements
 			$date = (($this->_post_data['payment_date'])?strtotime($this->_post_data['payment_date']):FALSE);
 			$action = 'pay';
 		}
+		//for refund payment process
 		elseif($this->_refund)
 		{
 			//refund not implemented yet
 			$action = 'refund';
 		}
-
+		//logging
 		$payment_log = new Model_Payment_Log('notifier','paypal');
 		$payment_log->create('instant',$action,$success, $this->_post_data, array(), $txn_id, $date, $custom);
+		//if process is not sucessed then throw exception
 		if(!$success)
 		{
 			throw new Payment_Exception("Paypal ipn have not appied: payment_status is not 'Completed' but is ':status'. POST: :post ",
@@ -63,10 +66,8 @@ class Payment_Notifier_Instant_Paypal extends Payment_Notifier_Paypal implements
 	{
 		$this->_pay = (isset($this->_post_data['txn_type']) AND $this->_post_data['txn_type'] == 'web_accept' AND
 			isset($this->_post_data['payment_type']) AND $this->_post_data['payment_type'] == 'instant');
-
-		//refund has not ipmplemented
+		//refund is not ipmplemented
 		$this->_refund = FALSE;
-
 		$handled = ($this->_pay OR $this->_refund);
 
 		if($handled)
@@ -119,6 +120,7 @@ class Payment_Notifier_Instant_Paypal extends Payment_Notifier_Paypal implements
 				$this->_instant_payment->item_id = $this->_post_data['item_number'];
 			}
 		}
+
 		return $handled;
 	}
 
@@ -151,6 +153,7 @@ class Payment_Notifier_Instant_Paypal extends Payment_Notifier_Paypal implements
 			$this->_instant_payment->date = strtotime($this->_post_data['payment_date']);
 		}
 		$payment = $this->_instant_payment;
+
 		return TRUE;
 	}
 
