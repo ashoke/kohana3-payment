@@ -4,7 +4,7 @@ Payment module for Kohana 3. Paypal and Linkpoint are supported for now.
 
 ##Basic terms
 
-Gateway - payment system like paypal, linpoint, authorize.net etc.
+Gateway - payment system likes paypal, linpoint, authorize.net etc.
 
 Mechanism types
 
