@@ -1,6 +1,6 @@
 #Payment
 
-Payment module for Kohana 3. Paypal and Linkpoint supported for now.
+Payment module for Kohana 3. Paypal and Linkpoint are supported for now.
 
 ##Basic terms
 
@@ -8,9 +8,9 @@ Gateway - payment system like paypal, linpoint, authorize.net etc.
 
 Mechanism types
 
-'notifier' - gateway sends data to  app(to defined controller) for notify about some actions that has been placed at gateway. 
+'notifier' - gateway sends data to  app(to defined controller) for notify about some action that happened at gateway. 
 
-'requester' - data sends from app to gateway about some action as request and gateway return response as result of that request.
+'requester' - app sends data to gateway about some action as request and gateway returns response as result of that request.
 
 ##Install
 
